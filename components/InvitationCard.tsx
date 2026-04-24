@@ -1,133 +1,102 @@
 "use client";
 
 import { motion } from "framer-motion";
-import LaceFrame from "./LaceFrame";
+import LaceFrame, { TinyOrnament } from "./LaceFrame";
+import LuxuryButton from "./LuxuryButton";
 import { invitation } from "@/data/invitation";
 
 export default function InvitationCard() {
-  const { couple, events } = invitation;
+  const { couple, events, venue } = invitation;
+
   return (
-    <section className="relative z-10 flex min-h-[100dvh] w-full items-center justify-center px-5 py-16">
+    <section className="relative z-10 flex min-h-[100svh] w-full flex-col items-center justify-center px-5 py-14 sm:py-16">
       <motion.div
-        initial={{ opacity: 0, y: 50, rotate: -2.5, scale: 0.96 }}
-        whileInView={{ opacity: 1, y: 0, rotate: -1.2, scale: 1 }}
-        viewport={{ once: true, amount: 0.4 }}
-        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+        initial={{ opacity: 0, y: 30, scale: 0.97 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         className="relative w-full max-w-[22rem] sm:max-w-md"
+        style={{ aspectRatio: "4 / 5" }}
       >
-        <div className="card-fabric relative aspect-[3/4] w-full rounded-[2px] shadow-glow">
-          <LaceFrame />
+        {/* Translucent fabric interior */}
+        <div className="lace-veil absolute inset-3 rounded-[2px] bg-black/40 ring-1 ring-ivory/20" />
 
-          <div className="relative z-10 flex h-full w-full flex-col items-center justify-center px-6 text-center">
-            <motion.p
-              initial={{ opacity: 0, y: 8 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4, duration: 1 }}
-              className="text-[0.62rem] uppercase tracking-[0.5em] text-ivory/70"
-            >
-              Düğün Daveti
-            </motion.p>
+        {/* Scalloped lace frame */}
+        <LaceFrame />
 
-            <motion.h2
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6, duration: 1.2 }}
-              className="mt-6 font-script text-5xl leading-[0.95] text-ivory sm:text-6xl"
-            >
-              {couple.bride}
-            </motion.h2>
+        {/* Content */}
+        <div className="relative z-10 flex h-full w-full flex-col items-center justify-center px-6 text-center sm:px-10">
+          <motion.h2
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4, duration: 1.1 }}
+            className="font-script leading-[0.9] text-ivory"
+            style={{ fontSize: "clamp(2.8rem, 11vw, 4.6rem)" }}
+          >
+            Düğünümüze
+            <br />
+            Davet
+          </motion.h2>
 
-            <motion.span
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.85, duration: 1.2 }}
-              className="my-3 font-serif text-2xl italic text-ivory/70"
-            >
-              &amp;
-            </motion.span>
+          <div className="thin-divider mt-6 w-28" />
 
-            <motion.h2
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 1.0, duration: 1.2 }}
-              className="font-script text-5xl leading-[0.95] text-ivory sm:text-6xl"
-            >
-              {couple.groom}
-            </motion.h2>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.65, duration: 1.0 }}
+            className="mt-6 font-serif text-[1rem] uppercase tracking-[0.36em] text-ivory sm:text-[1.1rem]"
+          >
+            {couple.bride} &amp; {couple.groom}
+          </motion.p>
 
-            <div className="thin-divider my-8 w-3/5" />
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 1.2, duration: 1.1 }}
-              className="space-y-3 text-ivory/85"
-            >
-              <EventLine
-                label={events.henna.label}
-                date={events.henna.date}
-                day={events.henna.day}
-              />
-              <EventLine
-                label={events.wedding.label}
-                date={events.wedding.date}
-                day={events.wedding.day}
-                emphasize
-              />
-            </motion.div>
-
-            <div className="thin-divider mt-8 w-3/5" />
-
-            <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 0.7 }}
-              viewport={{ once: true }}
-              transition={{ delay: 1.4, duration: 1.1 }}
-              className="mt-6 text-[0.62rem] uppercase tracking-[0.45em] text-ivory/70"
-            >
-              İstanbul · 2026
-            </motion.p>
-          </div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 0.95 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.85, duration: 1.0 }}
+            className="mt-3 font-serif text-[0.95rem] uppercase tracking-[0.32em] text-ivory/90 sm:text-[1.05rem]"
+          >
+            {events.wedding.date}
+          </motion.p>
         </div>
+      </motion.div>
 
-        {/* Soft under-glow */}
-        <div className="pointer-events-none absolute -inset-10 -z-10 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(182,154,107,0.18),transparent_70%)] blur-2xl" />
+      {/* Below-card info */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 1.1, delay: 0.3 }}
+        className="mt-12 flex w-full max-w-md flex-col items-center text-center"
+      >
+        <p
+          className="font-script leading-none text-ivory"
+          style={{ fontSize: "clamp(1.5rem, 5.5vw, 2.2rem)" }}
+        >
+          Hot Salon Davet
+        </p>
+
+        <TinyOrnament className="mt-5 h-3 w-28 text-ivory/75" />
+
+        <p className="mt-5 font-serif text-[0.88rem] uppercase tracking-[0.32em] text-ivory sm:text-[1rem]">
+          {venue.addressLine2}
+        </p>
+        <p className="mt-2 font-serif text-[0.88rem] uppercase tracking-[0.28em] text-ivory/90 sm:text-[1rem]">
+          {events.wedding.date}
+        </p>
+
+        <p className="mt-3 font-serif text-[0.95rem] italic text-ivory/85 sm:text-[1.05rem]">
+          {venue.addressLine1}
+        </p>
+
+        <div className="mt-8">
+          <LuxuryButton href={venue.mapsUrl} ariaLabel="Adresi ve konumu aç">
+            Adres &amp; Konumu Aç
+          </LuxuryButton>
+        </div>
       </motion.div>
     </section>
-  );
-}
-
-function EventLine({
-  label,
-  date,
-  day,
-  emphasize,
-}: {
-  label: string;
-  date: string;
-  day: string;
-  emphasize?: boolean;
-}) {
-  return (
-    <div className="flex flex-col items-center gap-0.5">
-      <span className="text-[0.62rem] uppercase tracking-[0.5em] text-ivory/55">
-        {label}
-      </span>
-      <span
-        className={`font-serif ${
-          emphasize ? "text-2xl" : "text-xl"
-        } tracking-wide text-ivory`}
-      >
-        {date}
-      </span>
-      <span className="text-[0.7rem] uppercase tracking-[0.35em] text-ivory/65">
-        {day}
-      </span>
-    </div>
   );
 }

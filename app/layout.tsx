@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Pinyon_Script, Inter } from "next/font/google";
+import { Cormorant_Garamond, Allura, Inter } from "next/font/google";
 import "./globals.css";
 
 const serif = Cormorant_Garamond({
@@ -9,8 +9,8 @@ const serif = Cormorant_Garamond({
   display: "swap",
 });
 
-const script = Pinyon_Script({
-  subsets: ["latin", "latin-ext"],
+const script = Allura({
+  subsets: ["latin"],
   weight: "400",
   variable: "--font-script",
   display: "swap",
@@ -18,7 +18,7 @@ const script = Pinyon_Script({
 
 const sans = Inter({
   subsets: ["latin", "latin-ext"],
-  weight: ["300", "400"],
+  weight: ["300", "400", "500"],
   variable: "--font-sans",
   display: "swap",
 });
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b0907",
+  themeColor: "#0a0806",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -43,7 +43,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="tr" className={`${serif.variable} ${script.variable} ${sans.variable}`}>
-      <body className="grain font-serif">
+      <body className="font-serif">
         {children}
       </body>
     </html>

@@ -14,7 +14,7 @@ export default function IntroEnvelope({ onOpen }: Props) {
 
   useEffect(() => {
     if (!opening) return;
-    const t = setTimeout(onOpen, reduce ? 200 : 1600);
+    const t = setTimeout(onOpen, reduce ? 200 : 1400);
     return () => clearTimeout(t);
   }, [opening, onOpen, reduce]);
 
@@ -23,21 +23,22 @@ export default function IntroEnvelope({ onOpen }: Props) {
   };
 
   return (
-    <div className="relative z-10 flex min-h-[100dvh] w-full flex-col items-center justify-center px-6 pb-[max(1.5rem,var(--safe-bottom))] pt-[max(2.5rem,var(--safe-top))]">
+    <div className="relative z-10 flex h-[100svh] min-h-[100svh] w-full flex-col items-center justify-center gap-4 overflow-hidden px-5 pb-[max(0.75rem,var(--safe-bottom))] pt-[max(0.75rem,var(--safe-top))] sm:gap-6">
       <motion.p
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 0.75, y: 0 }}
-        transition={{ duration: 1.4, delay: 0.3 }}
-        className="mb-3 text-center text-[0.68rem] uppercase tracking-[0.45em] text-ivory/70"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 0.95, y: 0 }}
+        transition={{ duration: 1.2, delay: 0.2 }}
+        className="text-center text-[0.78rem] uppercase tracking-[0.35em] text-ivory/90 sm:text-[0.9rem] sm:tracking-[0.4em]"
       >
-        {invitation.messages.heroHint}
+        Size bir mektubumuz var
       </motion.p>
 
       <motion.h1
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.6, delay: 0.5 }}
-        className="mb-10 text-center font-script text-5xl leading-none text-ivory sm:text-6xl md:text-7xl"
+        transition={{ duration: 1.4, delay: 0.4 }}
+        className="text-center font-script leading-[0.9] text-ivory drop-shadow-[0_2px_18px_rgba(0,0,0,0.65)]"
+        style={{ fontSize: "clamp(2.8rem, 13vw, 5.5rem)" }}
       >
         {invitation.couple.combined}
       </motion.h1>
@@ -51,94 +52,268 @@ export default function IntroEnvelope({ onOpen }: Props) {
             trigger();
           }
         }}
-        initial={{ opacity: 0, y: 40, scale: 0.96 }}
+        initial={{ opacity: 0, y: 24, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 1.4, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        whileHover={{ scale: 1.015 }}
-        whileTap={{ scale: 0.985 }}
+        transition={{ duration: 1.2, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        whileHover={{ scale: 1.012 }}
+        whileTap={{ scale: 0.988 }}
         aria-label="Zarfı aç"
-        className="relative h-56 w-[19rem] max-w-[88vw] cursor-pointer shadow-envelope focus:outline-none focus-visible:ring-1 focus-visible:ring-ivory/70 sm:h-64 sm:w-[22rem]"
+        className="group relative cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-ivory/70"
+        style={{
+          width: "min(82vw, 24rem)",
+          aspectRatio: "1.6 / 1",
+        }}
       >
-        {/* Envelope body */}
-        <div className="absolute inset-0 rounded-sm bg-gradient-to-b from-parchment to-[#d9caa6]">
-          <div className="absolute inset-0 rounded-sm bg-[linear-gradient(180deg,rgba(255,255,255,0.18),transparent_40%)]" />
-          <div className="absolute inset-1 rounded-sm border border-ink/15" />
-          <div className="absolute inset-[0.55rem] rounded-sm border border-ink/10" />
-        </div>
+        {/* Soft shadow under envelope */}
+        <div className="absolute -inset-x-2 -bottom-2 top-1/3 -z-0 rounded-[4px] bg-black/40 blur-xl" />
 
-        {/* Back triangles (static) */}
-        <div className="absolute inset-x-0 bottom-0 top-1/2 overflow-hidden rounded-b-sm">
-          <div className="absolute inset-x-0 top-0 h-full bg-[#d9caa6]" />
-          <div
-            className="absolute inset-x-0 top-0 h-full"
-            style={{
-              background:
-                "linear-gradient(135deg,#c9b88f 0%, #d9caa6 50%, #c9b88f 100%)",
-              clipPath: "polygon(0 0, 50% 85%, 100% 0, 100% 100%, 0 100%)",
-            }}
-          />
-        </div>
-
-        {/* Card peeking out */}
-        <motion.div
-          initial={{ y: 0 }}
-          animate={opening ? { y: reduce ? -10 : -140, opacity: [1, 1, 0.9] } : { y: 0 }}
-          transition={{ duration: 1.2, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute left-1/2 top-1/2 z-10 h-[78%] w-[86%] -translate-x-1/2 -translate-y-1/2 rounded-[2px] bg-gradient-to-b from-ivory to-[#e7dcc0] shadow-[inset_0_0_0_1px_rgba(11,9,7,0.12)]"
-        >
-          <div className="flex h-full w-full flex-col items-center justify-center px-4">
-            <p className="font-script text-3xl text-ink/80 sm:text-4xl">
-              {invitation.couple.combined}
-            </p>
-            <div className="my-2 h-px w-16 bg-ink/25" />
-            <p className="text-[0.6rem] uppercase tracking-[0.4em] text-ink/55">
-              13 · 06 · 2026
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Envelope flap (animates open) */}
-        <motion.div
-          initial={{ rotateX: 0 }}
-          animate={opening ? { rotateX: reduce ? -180 : -175 } : { rotateX: 0 }}
-          transition={{ duration: 1.1, ease: [0.65, 0, 0.35, 1] }}
-          style={{
-            transformOrigin: "top",
-            transformStyle: "preserve-3d",
-            backfaceVisibility: "hidden",
-          }}
-          className="absolute inset-x-0 top-0 z-20 h-[58%] origin-top"
-        >
-          <div
-            className="h-full w-full"
-            style={{
-              background:
-                "linear-gradient(180deg,#e3d3ad 0%, #c9b88f 100%)",
-              clipPath: "polygon(0 0, 50% 100%, 100% 0)",
-              filter: "drop-shadow(0 6px 10px rgba(0,0,0,0.35))",
-            }}
-          />
-
-          {/* Wax-seal style monogram */}
-          <div className="pointer-events-none absolute left-1/2 top-[62%] -translate-x-1/2 -translate-y-1/2">
-            <div className="relative grid h-14 w-14 place-items-center rounded-full bg-bordeaux/90 shadow-[0_4px_10px_rgba(0,0,0,0.4)] ring-1 ring-black/20">
-              <span className="font-script text-[1.35rem] text-ivory/95">
-                {invitation.couple.monogram}
-              </span>
-              <span className="absolute -inset-1 rounded-full border border-bordeaux/60" />
-            </div>
-          </div>
-        </motion.div>
+        <EnvelopeSVG
+          monogram={invitation.couple.monogram}
+          opening={opening}
+          reduce={!!reduce}
+        />
       </motion.button>
 
       <motion.p
         initial={{ opacity: 0 }}
-        animate={{ opacity: opening ? 0 : 0.7 }}
-        transition={{ duration: 1.4, delay: 1.3 }}
-        className="mt-8 text-center text-[0.7rem] uppercase tracking-[0.4em] text-ivory/70"
+        animate={{ opacity: opening ? 0 : 0.95 }}
+        transition={{ duration: 1.0, delay: 0.9 }}
+        className="whitespace-nowrap text-center text-[0.72rem] uppercase tracking-[0.28em] text-ivory/90 sm:text-[0.85rem] sm:tracking-[0.38em]"
       >
-        {invitation.messages.openEnvelope}
+        Zarfı açmak için dokunun
       </motion.p>
     </div>
+  );
+}
+
+// Scalloped-lace landscape envelope. Closed state has the flap covering the
+// top triangle; on tap the flap folds up and the card slides out from behind.
+function EnvelopeSVG({
+  monogram,
+  opening,
+  reduce,
+}: {
+  monogram: string;
+  opening: boolean;
+  reduce: boolean;
+}) {
+  const W = 400;
+  const H = 250;
+  // V-tip of the flap at the vertical center of the envelope.
+  const V = { x: W / 2, y: H * 0.55 };
+
+  // Scallops count along each flap diagonal.
+  const nScallops = 14;
+
+  return (
+    <svg
+      viewBox={`0 0 ${W} ${H}`}
+      preserveAspectRatio="xMidYMid meet"
+      className="absolute inset-0 h-full w-full"
+    >
+      <defs>
+        <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#f5ecd4" />
+          <stop offset="100%" stopColor="#e5d6ae" />
+        </linearGradient>
+        <linearGradient id="flapFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#f6edd5" />
+          <stop offset="100%" stopColor="#ead9b0" />
+        </linearGradient>
+      </defs>
+
+      {/* Envelope body (back panel) */}
+      <rect
+        x="0"
+        y="0"
+        width={W}
+        height={H}
+        rx="3"
+        fill="url(#paper)"
+        stroke="rgba(82,54,28,0.25)"
+        strokeWidth="0.7"
+      />
+
+      {/* Seams of the folded paper back — faint guide lines */}
+      <g stroke="rgba(82,54,28,0.15)" strokeWidth="0.5" fill="none">
+        <path d={`M 0 ${H} L ${V.x} ${V.y} L ${W} ${H}`} />
+      </g>
+
+      {/* Peek card behind the flap — slides up on open.
+          Below the flap (z-order: drawn before flap), above body. */}
+      <motion.g
+        initial={{ y: 0 }}
+        animate={opening ? { y: reduce ? -30 : -120 } : { y: 0 }}
+        transition={{
+          duration: 1.1,
+          delay: 0.5,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+      >
+        <rect
+          x={W * 0.1}
+          y={H * 0.22}
+          width={W * 0.8}
+          height={H * 0.62}
+          rx="2"
+          fill="#faf1da"
+          stroke="rgba(82,54,28,0.25)"
+          strokeWidth="0.6"
+        />
+        <text
+          x={W / 2}
+          y={H * 0.45}
+          textAnchor="middle"
+          fontFamily="var(--font-script)"
+          fontSize="28"
+          fill="#2a1514"
+        >
+          Ezgi &amp; Esat
+        </text>
+        <line
+          x1={W * 0.38}
+          y1={H * 0.5}
+          x2={W * 0.62}
+          y2={H * 0.5}
+          stroke="rgba(42,21,20,0.4)"
+          strokeWidth="0.6"
+        />
+        <text
+          x={W / 2}
+          y={H * 0.6}
+          textAnchor="middle"
+          fontFamily="var(--font-serif)"
+          fontSize="10"
+          fill="rgba(42,21,20,0.7)"
+          letterSpacing="3"
+        >
+          13 · 06 · 2026
+        </text>
+      </motion.g>
+
+      {/* Flap — animated via framer-motion. rotateX origin at top center of envelope */}
+      <motion.g
+        initial={{ rotateX: 0 }}
+        animate={opening ? { rotateX: reduce ? -180 : -172 } : { rotateX: 0 }}
+        transition={{ duration: 1.0, ease: [0.65, 0, 0.35, 1] }}
+        style={{
+          transformOrigin: `${W / 2}px 0px`,
+          transformBox: "view-box",
+          backfaceVisibility: "hidden",
+        }}
+      >
+        {/* Flap triangle — from top corners down to the V-tip */}
+        <path
+          d={`M 0 0 L ${V.x} ${V.y} L ${W} 0 Z`}
+          fill="url(#flapFill)"
+          stroke="rgba(82,54,28,0.3)"
+          strokeWidth="0.6"
+        />
+
+        {/* Subtle drop shadow at the flap's bottom edges */}
+        <path
+          d={`M 0 0 L ${V.x} ${V.y} L ${W} 0`}
+          stroke="rgba(0,0,0,0.12)"
+          strokeWidth="1.5"
+          fill="none"
+        />
+
+        {/* Scalloped lace along the two diagonal flap edges */}
+        <LaceDiagonal
+          from={{ x: 0, y: 0 }}
+          to={V}
+          count={nScallops}
+          radius={6}
+        />
+        <LaceDiagonal
+          from={V}
+          to={{ x: W, y: 0 }}
+          count={nScallops}
+          radius={6}
+        />
+
+        {/* Script monogram centered on the flap, just above V-tip */}
+        <text
+          x={V.x}
+          y={V.y - 12}
+          textAnchor="middle"
+          fontFamily="var(--font-script)"
+          fontSize="56"
+          fill="#2a1514"
+          style={{ letterSpacing: "-1px" }}
+        >
+          {monogram}
+        </text>
+      </motion.g>
+    </svg>
+  );
+}
+
+// Renders scalloped lace along a line segment — small overlapping semicircles
+// on the "inside" side of the flap, plus a delicate filigree dot pattern.
+function LaceDiagonal({
+  from,
+  to,
+  count,
+  radius,
+}: {
+  from: { x: number; y: number };
+  to: { x: number; y: number };
+  count: number;
+  radius: number;
+}) {
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  const len = Math.hypot(dx, dy);
+  // Unit vector along the edge
+  const ux = dx / len;
+  const uy = dy / len;
+  // Perpendicular pointing inward (into flap body, i.e. up-inward)
+  // For a triangle apex-down flap, inward is toward the flap interior (up).
+  // Since both diagonals go from top corner to center, inward perpendicular is (-uy, ux)
+  const nx = -uy;
+  const ny = ux;
+
+  const scallops = [];
+  for (let i = 0; i < count; i++) {
+    const t = (i + 0.5) / count;
+    const cx = from.x + dx * t + nx * radius * 0.9;
+    const cy = from.y + dy * t + ny * radius * 0.9;
+    scallops.push(
+      <circle
+        key={`s-${i}`}
+        cx={cx}
+        cy={cy}
+        r={radius}
+        fill="none"
+        stroke="rgba(255,252,240,0.92)"
+        strokeWidth="0.9"
+      />
+    );
+  }
+
+  // Inner filigree dots
+  const dots = [];
+  for (let i = 0; i < count * 2; i++) {
+    const t = (i + 0.5) / (count * 2);
+    const cx = from.x + dx * t + nx * radius * 2.2;
+    const cy = from.y + dy * t + ny * radius * 2.2;
+    dots.push(<circle key={`d-${i}`} cx={cx} cy={cy} r="0.8" fill="rgba(255,252,240,0.85)" />);
+  }
+
+  return (
+    <g>
+      {/* base edge line */}
+      <line
+        x1={from.x}
+        y1={from.y}
+        x2={to.x}
+        y2={to.y}
+        stroke="rgba(255,252,240,0.85)"
+        strokeWidth="0.6"
+      />
+      {scallops}
+      {dots}
+    </g>
   );
 }
