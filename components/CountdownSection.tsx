@@ -187,13 +187,6 @@ export default function CountdownSection() {
           >
             Takvime Ekle
           </LuxuryButton>
-          <LuxuryButton
-            variant="outline-dark"
-            href={invitation.rsvpUrl}
-            ariaLabel="Katılım bildir"
-          >
-            Katılım Bildir
-          </LuxuryButton>
         </motion.div>
 
         <p className="mt-8 text-[0.8rem] uppercase tracking-[0.4em] text-ink/65">

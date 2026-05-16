@@ -52,7 +52,6 @@ export const invitation = {
       endUTC: "20260613T220000Z",
     },
   },
-  rsvpUrl: "#rsvp",
 };
 
 export type Invitation = typeof invitation;

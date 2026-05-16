@@ -51,15 +51,20 @@ export default function InvitationCard() {
             {couple.bride} &amp; {couple.groom}
           </motion.p>
 
-          <motion.p
+          <motion.div
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 0.95 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.85, duration: 1.0 }}
-            className="mt-3 font-serif text-[0.95rem] uppercase tracking-[0.32em] text-ivory/90 sm:text-[1.05rem]"
+            className="mt-5 flex flex-col items-center gap-2 font-serif uppercase tracking-[0.3em] text-ivory"
           >
-            {events.wedding.date}
-          </motion.p>
+            <span className="text-[1.05rem] font-medium sm:text-[1.25rem]">
+              {events.henna.label} &middot; {events.henna.date}
+            </span>
+            <span className="text-[1.05rem] font-medium sm:text-[1.25rem]">
+              {events.wedding.label} &middot; {events.wedding.date}
+            </span>
+          </motion.div>
         </div>
       </motion.div>
 
